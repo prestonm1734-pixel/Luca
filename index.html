@@ -92,8 +92,9 @@ input{font-family:inherit}
   display:inline-flex;align-items:center;gap:9px;
   font-size:13px;font-weight:600;letter-spacing:.01em;color:var(--ink-2);
   background:var(--cream-2);border:1px solid var(--line);
-  padding:7px 13px 7px 9px;border-radius:999px;margin-bottom:22px;
+  padding:7px 13px 7px 9px;border-radius:999px;margin-bottom:22px;white-space:nowrap;max-width:100%;
 }
+.eyebrow #heroTime{font-variant-numeric:tabular-nums}
 .eyebrow .live{
   display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;
   text-transform:uppercase;letter-spacing:.08em;color:var(--warn);
@@ -101,8 +102,8 @@ input{font-family:inherit}
 .eyebrow .live i{width:6px;height:6px;border-radius:50%;background:var(--warn);animation:pulse 1.8s infinite}
 h1.hero-h{
   font-family:"Instrument Serif",serif;font-weight:400;
-  font-size:clamp(44px,11vw,80px);line-height:.98;letter-spacing:-.015em;
-  margin-bottom:20px;
+  font-size:clamp(42px,9vw,70px);line-height:1.0;letter-spacing:-.015em;
+  margin-bottom:20px;overflow-wrap:break-word;
 }
 h1.hero-h em{font-style:italic}
 h1.hero-h .u{
@@ -118,6 +119,23 @@ h1.hero-h .u::after{
   line-height:1.45;margin-bottom:14px;
 }
 .hero-sub b{color:var(--ink);font-weight:600}
+.hero-tag{font-size:clamp(16px,2vw,18px);color:var(--muted);font-weight:500;margin-top:14px;letter-spacing:-.01em}
+.hero-flow{display:grid;grid-template-columns:1fr;gap:8px;margin-top:24px;border:1px solid var(--line);border-radius:16px;padding:7px;background:var(--cream)}
+.fstep{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:11px;background:transparent;position:relative;transition:background .35s var(--ease)}
+.fstep .fnum{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#fff;border:1.5px solid var(--line-2);color:var(--muted);font-size:13px;font-weight:700;flex:none;transition:all .35s var(--ease)}
+.fstep .ftxt{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.fstep .ftxt b{font-size:14.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.fstep .ftxt i{font-size:12.5px;font-style:normal;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fstep.active{background:#fff;box-shadow:var(--shadow-sm)}
+.fstep.active .fnum{background:var(--ink);border-color:var(--ink);color:#fff;transform:scale(1.06)}
+.fstep.active .ftxt i{color:var(--ink-2)}
+.fstep.done .fnum{background:var(--ok);border-color:var(--ok);color:#fff}
+.fstep.done.active{background:var(--ok-bg);box-shadow:none}
+.fstep.done.active .fnum{transform:scale(1.06)}
+.fstep .fnum svg{opacity:0;transition:opacity .3s}
+.fstep.done .fnum svg{opacity:1}
+.fstep .fnum .num{transition:opacity .3s}
+@media(min-width:480px){.hero-flow{grid-template-columns:repeat(3,1fr);gap:6px}.fstep{flex-direction:column;align-items:flex-start;gap:9px;padding:13px 13px 14px}.fstep .ftxt i{white-space:normal}}
 .proof{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:22px 0 26px;color:var(--muted);font-size:13.5px}
 .proof .av{display:flex}
 .proof .av span{
@@ -378,9 +396,24 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
 <header class="hero">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <div class="eyebrow"><span class="live"><i></i>Live</span> Built for the 11:59&nbsp;PM panic</div>
-      <h1 class="hero-h">It's <span class="mono" id="heroTime" style="font-size:.62em;letter-spacing:-.02em">11:59</span>.<br>Your homework is <span class="u">already&nbsp;done.</span></h1>
-      <p class="hero-sub">Tell Luca what's due. It <b>logs into your school portal</b>, completes the assignment, and submits it <b>before the deadline.</b> Any assignment. Any portal. Any deadline.</p>
+      <div class="eyebrow"><span class="live"><i></i>Live</span> It's <span class="mono" id="heroTime">11:59&nbsp;PM</span> · deadline incoming</div>
+      <h1 class="hero-h">Luca logs into your portal and <span class="u">does your&nbsp;homework.</span></h1>
+      <p class="hero-tag">Any assignment. Any portal. Any deadline.</p>
+
+      <div class="hero-flow" id="heroFlow">
+        <div class="fstep" data-fstep="0">
+          <span class="fnum">1</span>
+          <span class="ftxt"><b>You type what's due</b><i>"5-page essay, due midnight"</i></span>
+        </div>
+        <div class="fstep" data-fstep="1">
+          <span class="fnum">2</span>
+          <span class="ftxt"><b>Luca logs in &amp; does it</b><i>Signs into your portal, writes it</i></span>
+        </div>
+        <div class="fstep" data-fstep="2">
+          <span class="fnum"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <span class="ftxt"><b>Submitted on time</b><i>In before the deadline. Done.</i></span>
+        </div>
+      </div>
 
       <div class="proof">
         <div class="av"><span>K</span><span>M</span><span>J</span><span>+</span></div>
@@ -437,7 +470,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
     <div class="portal">Canvas</div>
     <div class="portal">Blackboard</div>
     <div class="portal">Schoology</div>
-    <div class="portal">Google Classroom</div>
+    <div class="portal" style="white-space:nowrap">Google Classroom</div>
     <div class="portal">Moodle</div>
     <div class="portal">Gradescope</div>
   </div>
@@ -449,13 +482,13 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
     <div class="sec-head reveal">
       <div class="sec-tag">How it works</div>
       <h2 class="sec-h">Three taps between <em>you</em> and a full night's sleep.</h2>
-      <p class="sec-sub">No setup rituals. No browser extensions to babysit. You type one sentence — Luca does the rest while you close your eyes.</p>
+      <p class="sec-sub">No setup rituals. No browser extensions to babysit. You type one sentence and Luca does the rest while you close your eyes.</p>
     </div>
     <div class="steps">
       <div class="step reveal">
         <div class="n"></div>
         <h3>Say what's due</h3>
-        <p>Type the assignment in plain English — "5-page essay on the Cold War, History 201, due midnight." That's the whole brief.</p>
+        <p>Type the assignment in plain English, like "5-page essay on the Cold War, History 201, due midnight." That's the whole brief.</p>
         <div class="tag">~ 12 seconds of typing</div>
       </div>
       <div class="step reveal">
@@ -466,7 +499,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
       </div>
       <div class="step reveal">
         <div class="n"></div>
-        <h3>It submits — on time</h3>
+        <h3>It submits on time</h3>
         <p>Luca completes the work, matches your level, and uploads it before the deadline. You get a receipt the second it's in.</p>
         <div class="tag">Submitted ✓ with time to spare</div>
       </div>
@@ -480,7 +513,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
     <div class="sec-head reveal" style="margin-inline:auto;text-align:center">
       <div class="sec-tag">Pricing</div>
       <h2 class="sec-h">Pay for what you turn&nbsp;in.</h2>
-      <p class="sec-sub" style="margin-inline:auto">Every assignment costs credits based on length and difficulty. Credits refresh every month — roll into deadline season with room to spare.</p>
+      <p class="sec-sub" style="margin-inline:auto">Every assignment costs credits based on length and difficulty. Credits refresh every month, so you roll into deadline season with room to spare.</p>
     </div>
     <div class="plans">
       <div class="plan basic reveal">
@@ -503,7 +536,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
         <ul>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#eafaf1"></circle><path d="M7 12.5l3 3 7-7" stroke="#10915a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>~30–40 assignments / month</li>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#eafaf1"></circle><path d="M7 12.5l3 3 7-7" stroke="#10915a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Priority queue at peak deadlines</li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#eafaf1"></circle><path d="M7 12.5l3 3 7-7" stroke="#10915a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Rush mode — under-10-minute deadlines</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#eafaf1"></circle><path d="M7 12.5l3 3 7-7" stroke="#10915a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Rush mode for under-10-minute deadlines</li>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#eafaf1"></circle><path d="M7 12.5l3 3 7-7" stroke="#10915a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Tone matching to your past work</li>
         </ul>
         <button class="btn" data-scroll="join">Start with Pro</button>
@@ -681,10 +714,23 @@ window.addEventListener('scroll', ()=>{
   else mbar.classList.remove('show');
 });
 
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay=(i%3*60)+'ms'; io.observe(el); });
+const revealEls = [...document.querySelectorAll('.reveal')];
+revealEls.forEach((el,i)=>{ el.style.transitionDelay=(i%3*60)+'ms'; });
+function revealAll(){ revealEls.forEach(el=>el.classList.add('in')); }
+if ('IntersectionObserver' in window){
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+  },{threshold:0.01, rootMargin:'0px 0px -8% 0px'});
+  revealEls.forEach(el=>io.observe(el));
+  const sweep = ()=> revealEls.forEach(el=>{
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight*0.95) el.classList.add('in');
+  });
+  window.addEventListener('scroll', sweep, {passive:true});
+  setTimeout(sweep, 400);
+} else {
+  revealAll();
+}
 
 /* ============ LIVE CLOCKS / COUNTDOWN ============ */
 function fmtClock(d){
@@ -698,7 +744,7 @@ function tickClocks(){
   const now = new Date();
   const c = fmtClock(now);
   ['navClock','finalClock'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=c; });
-  const ht = document.getElementById('heroTime'); if(ht) ht.textContent = c.replace(/ (AM|PM)/,'');
+  const ht = document.getElementById('heroTime'); if(ht) ht.textContent = c;
   deadline = deadline<=0 ? 134 : deadline-1;
   const nc = document.getElementById('navCount'); if(nc) nc.textContent = fmtMMSS(deadline);
 }
@@ -708,7 +754,7 @@ tickClocks(); setInterval(tickClocks,1000);
 const EXAMPLES = [
   {
     course:"HIST 201 · Canvas", portal:"Canvas",
-    req:"5-page essay on the causes of the French Revolution for History 201 — due in 8 minutes 😭",
+    req:"5-page essay on the causes of the French Revolution for History 201, due in 8 minutes 😭",
     type:"essay",
     steps:["Logging into Canvas","Opening HIST 201","Reading the prompt & rubric","Writing 5 pages","Checking originality","Submitting"],
     rows:[["Portal","Canvas"],["Length","5 pages · 1,420 words"],["Submitted","11:58 PM"],["Credits used","14"]],
@@ -716,7 +762,7 @@ const EXAMPLES = [
   },
   {
     course:"MATH 152 · Blackboard", portal:"Blackboard",
-    req:"Calc II problem set — 20 problems, show all work. Due at midnight.",
+    req:"Calc II problem set, 20 problems, show all work. Due at midnight.",
     type:"problem set",
     steps:["Logging into Blackboard","Opening MATH 152","Reading 20 problems","Solving & showing work","Formatting as PDF","Submitting"],
     rows:[["Portal","Blackboard"],["Work","20 / 20 problems"],["Submitted","11:51 PM"],["Credits used","9"]],
@@ -724,7 +770,7 @@ const EXAMPLES = [
   },
   {
     course:"BIO 101 · Schoology", portal:"Schoology",
-    req:"Bio lab report on photosynthesis — intro, methods, results, discussion. Due in 15 min.",
+    req:"Bio lab report on photosynthesis: intro, methods, results, discussion. Due in 15 min.",
     type:"lab report",
     steps:["Logging into Schoology","Opening BIO 101","Reading lab guidelines","Writing the report","Adding citations","Submitting"],
     rows:[["Portal","Schoology"],["Sections","4 / 4 complete"],["Submitted","11:49 PM"],["Credits used","11"]],
@@ -732,7 +778,7 @@ const EXAMPLES = [
   },
   {
     course:"SPAN 102 · Google Classroom", portal:"Google Classroom",
-    req:"Spanish discussion post — 200 words on weekend plans, plus reply to 2 classmates. Due tonight.",
+    req:"Spanish discussion post, 200 words on weekend plans, plus reply to 2 classmates. Due tonight.",
     type:"discussion post",
     steps:["Logging into Classroom","Opening SPAN 102","Reading the thread","Writing 200 words","Replying to 2 peers","Posting"],
     rows:[["Portal","Classroom"],["Post","218 words + 2 replies"],["Submitted","11:36 PM"],["Credits used","4"]],
@@ -740,7 +786,7 @@ const EXAMPLES = [
   },
   {
     course:"CS 106 · Gradescope", portal:"Gradescope",
-    req:"Java assignment — implement a binary search tree with tests. Due in 30 min.",
+    req:"Java assignment: implement a binary search tree with tests. Due in 30 min.",
     type:"coding assignment",
     steps:["Logging into Gradescope","Opening CS 106","Reading the spec","Writing & testing code","Passing all test cases","Submitting"],
     rows:[["Portal","Gradescope"],["Tests","18 / 18 passing"],["Submitted","11:42 PM"],["Credits used","12"]],
@@ -777,8 +823,17 @@ async function typeInto(node, text){
   cur.remove();
 }
 
+const flowSteps = [...document.querySelectorAll('#heroFlow .fstep')];
+function setFlow(active){
+  flowSteps.forEach((s,i)=>{
+    s.classList.toggle('active', i===active);
+    s.classList.toggle('done', i<active || (i===2 && active===2));
+  });
+}
+
 async function runExample(ex){
   body.innerHTML='';
+  setFlow(0);
   devCourse.textContent = ex.course;
   let dueParts = ex.due.split(':').map(Number);
   let dueSec = dueParts[0]*60+dueParts[1];
@@ -791,10 +846,11 @@ async function runExample(ex){
   const typing = el('typing','<span></span><span></span><span></span>'); body.appendChild(typing);
   await sleep(900); typing.remove();
 
-  const ack = el('msg luca', `On it. Logging into <b>${ex.portal}</b> now — you can put the laptop down.`);
+  const ack = el('msg luca', `On it. Logging into <b>${ex.portal}</b> now. You can put the laptop down.`);
   body.appendChild(ack);
   await sleep(650); await waitWhilePaused();
 
+  setFlow(1);
   const work = el('work', `<h4><span class="spin"></span>Working on your ${ex.type}</h4>`);
   const stepNodes = ex.steps.map(s=>{
     const n = el('work-step', `<span class="ic"></span>${s}`); work.appendChild(n); return n;
@@ -811,13 +867,14 @@ async function runExample(ex){
   work.querySelector('h4').innerHTML = `<span class="ic" style="width:14px;height:14px;border-radius:50%;background:var(--ok);display:inline-grid;place-items:center">${checkSVG}</span>Done`;
   await sleep(350);
 
+  setFlow(2);
   const rows = ex.rows.map(([k,v])=>`<div class="r-row"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
   const receipt = el('receipt', `
     <div class="receipt-top">
       <div class="chk">${checkSVG.replace('width="11" height="11"','width="18" height="18"')}</div>
       <div><b>Submitted to ${ex.portal}</b><span>${ex.spare}</span></div>
     </div>
-    <div class="receipt-rows">${rows}<div class="r-row"><span class="k">On time?</span><span class="v spare">Yes — ${ex.spare}</span></div></div>
+    <div class="receipt-rows">${rows}<div class="r-row"><span class="k">On time?</span><span class="v spare">Yes, ${ex.spare}</span></div></div>
   `);
   body.appendChild(receipt);
   clearInterval(dueTimer);
