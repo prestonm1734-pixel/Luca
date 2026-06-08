@@ -10,7 +10,7 @@ window.NEXT_PUBLIC_SUPABASE_URL=${JSON.stringify(SUPABASE_URL)};
 window.NEXT_PUBLIC_SUPABASE_ANON_KEY=${JSON.stringify(SUPABASE_ANON_KEY)};
 </script>`;
 
-  const html = fs.readFileSync(path.join(process.cwd(), 'index.html'), 'utf8')
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8')
     .replace('<body>', `<body>\n${configScript}`);
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
